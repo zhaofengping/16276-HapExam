@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hbi.core.hss.mapper.TaskHeaderMapper">
+    <resultMap id="allTaskHeader" type="hbi.core.hss.dto.TaskHeader">
+        <result column="item_header_id" property="itemHeaderId"/>
+        <result column="interface_name" property="interfaceName"/>
+        <result column="DESCRIPTION" property="description"/>
+        <result column="source_system_code" property="sourceSystemCode"/>
+        <result column="data_type_code" property="dataTypeCode"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="frozen_flag" property="frozenFlag"/>
+        <result column="enabled_flag" property="enabledFlag"/>
+        <result column="CREATION_DATE" property="creationDate"/>
+        <!--关联用户名-->
+        <result column="USER_NAME" property="userName"/>
+        <!--关联数据类型名称-->
+        <result column="MEANING" property="dataMeaning"/>
+        <!--关联系统名称-->
+        <result column="source_system_name" property="sourceSystemName"/>
+    </resultMap>
+
+    <!--关联查询用户名,数据类型名称,系统名称-->
+    <select id="select" resultMap="allTaskHeader">
+        SELECT header.*,users.user_name,code.meaning,code_b.meaning "source_system_name" FROM hss_task_item_header_b header LEFT JOIN SYS_USER users ON
+        (header.created_by=users.user_id) LEFT JOIN sys_code_value_b code ON
+        (header.data_type_code=code.value) LEFT JOIN sys_code_value_b code_b ON
+        (header.source_system_code=code_b.value)
+        <where>
+            <if test="sourceSystemName!=null">
+                and code_b.meaning = #{sourceSystemName}
+            </if>
+            <if test="description!=null">
+                and header.DESCRIPTION = #{description}
+            </if>
+            <if test="interfaceName!=null">
+                and header.interface_name = #{interfaceName}
+            </if>
+            <if test="sourceSystemCode!=null">
+                and source_system_code = #{sourceSystemCode}
+            </if>
+            <if test="itemHeaderId!=null">
+                and header.item_header_id = #{itemHeaderId}
+            </if>
+        </where>
+    </select>
+</mapper>

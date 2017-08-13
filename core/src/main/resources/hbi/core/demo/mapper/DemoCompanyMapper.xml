@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hbi.core.demo.mapper.DemoCompanyMapper">
+    <resultMap id="BaseResultMap" type="hbi.core.demo.dto.Company">
+        <result column="company_id" property="companyId" jdbcType="DECIMAL" />
+        <result column="com_name" property="comName" jdbcType="VARCHAR" />
+        <result column="com_addr" property="comAddr" jdbcType="VARCHAR" />
+        <result column="com_type" property="comType" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+</mapper>

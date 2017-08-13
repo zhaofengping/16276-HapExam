@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hbi.core.hss.mapper.TaskLineMapper">
+    <resultMap id="allTaskLine" type="hbi.core.hss.dto.TaskLine">
+        <result column="ITEM_LINE_ID" property="itemLineId"/>
+        <result column="ITEM_HEADER_ID" property="itemHeaderId"/>
+        <result column="TITLE_TEXT" property="titleText"/>
+        <result column="COLUMN_TYPE_CODE" property="columnTypeCode"/>
+        <result column="COLUMN_NAME" property="columnName"/>
+        <result column="SEQ_NUM" property="seqNum"/>
+        <result column="VALUE_TYPE" property="valueType"/>
+        <result column="COLUMN_LEN" property="columnLen"/>
+        <result column="VALUE_SET" property="valueSet"/>
+        <result column="COLUMN_FORMAT" property="columnFormat"/>
+        <result column="REQUIRED_FLAG" property="requiredFlag"/>
+        <result column="SHOW_FLAG" property="showFlag"/>
+        <result column="ENABLE_FLAG" property="enableFlag"/>
+        <result column="UNIQUE_FLAG" property="uniqueFlag"/>
+        <result column="DISPLAY_WIDTH" property="displayWidth"/>
+        <result column="ssc_id" property="sscId"/>
+    </resultMap>
+
+    <!--根据ITEM_HEADER_ID查找SEQ_NUM最大值+1-->
+    <select id="findMaxSeqNum" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT MAX(SEQ_NUM)+1 from  hss_task_item_line_b where ITEM_HEADER_ID=#{itemHeaderId};
+    </select>
+
+    <!--根据itemHeaderId删除数据-->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE from HSS_TASK_ITEM_LINE_B WHERE ITEM_HEADER_ID=#{itemHeaderId}
+    </delete>
+
+</mapper>
